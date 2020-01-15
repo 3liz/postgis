@@ -1,0 +1,4 @@
+Package: postgresql-*
+Pin: origin apt.postgresql.org
+Pin-Priority: 600
+ 
