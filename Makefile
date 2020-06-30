@@ -12,11 +12,6 @@ POSTGRES_UID:=$(shell id -u)
 
 VERSION_TAG:=$(POSTGRES_VER)-$(POSTGIS_VER)
 
-BUILDID=$(shell date +"%Y%m%d%H%M")
-COMMITID=$(shell git rev-parse --short HEAD)
-
-BUILDIMAGE=$(NAME):$(FLAVOR)-$(COMMITID)
-
 build:
 	docker build --rm $(BUILD_ARGS) \
 		--build-arg POSTGRES_GID=$(POSTGRES_UID) \
