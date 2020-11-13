@@ -1,0 +1,36 @@
+stages:
+- build
+
+variables:
+  POSTGRES_UID: "999"
+
+.build:
+  stage: build
+  script: 
+    - make build POSTGIS_VER=$POSTGIS_VER POSTGRES_VER=$POSTGRES_VER POSTGRES_UID=$POSTGRES_UID
+    - $FACTORY_SCRIPTS/push-to-docker-hub.sh
+  tags:
+    - factory-dind
+  only:
+    refs:
+      - schedules
+
+build:11-2.5:
+  extends: .build
+  variables:
+    POSTGIS_VER: "2.5"
+    POSTGRES_VER: "11"  
+
+build:12-2.5:
+  extends: .build
+  variables:
+    POSTGIS_VER: "2.5"
+    POSTGRES_VER: "12"
+
+build:13-2.5:
+  extends: .build
+  variables:
+    POSTGIS_VER: "2.5"
+    POSTGRES_VER: "13"
+
+

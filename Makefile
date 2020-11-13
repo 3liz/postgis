@@ -12,7 +12,7 @@ POSTGRES_UID:=$(shell id -u)
 
 VERSION_TAG:=$(POSTGRES_VER)-$(POSTGIS_VER)
 
-build:
+build: manifest
 	docker build --rm $(BUILD_ARGS) \
 		--build-arg POSTGRES_GID=$(POSTGRES_UID) \
 		--build-arg POSTGRES_UID=$(POSTGRES_UID) \
@@ -20,5 +20,11 @@ build:
 		--build-arg POSTGIS_VER=$(POSTGIS_VER) \
 		-t $(NAME):$(VERSION_TAG) --cache-from=$(NAME):$(VERSION_TAG) $(DOCKERFILE) .
 
+MANIFEST=factory.manifest
 
+manifest: 
+	@echo name=$(NAME) > $(MANIFEST) && \
+    echo version=$(VERSION_TAG) >> $(MANIFEST) && \
+    echo buildid=$(BUILDID)   >> $(MANIFEST) && \
+    echo commitid=$(COMMITID) >> $(MANIFEST)
 
