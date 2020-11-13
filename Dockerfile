@@ -38,7 +38,9 @@ RUN set -eux; export DEBIAN_FRONTEND=noninteractive;  \
     sed -ri 's/#(create_main_cluster) .*$/\1 = false/' /etc/postgresql-common/createcluster.conf; \
     apt-get install -y postgresql-$PG_MAJOR-postgis-$POSTGIS_MAJOR \
                        postgresql-$PG_MAJOR-postgis-$POSTGIS_MAJOR-scripts \
-                       postgresql-contrib-$PG_MAJOR --no-install-recommends; \
+                       postgresql-contrib-$PG_MAJOR \
+                       postgresql-$PG_MAJOR-cron \
+                       --no-install-recommends; \
     apt-get autoremove -y; rm -rf /var/lib/apt/lists/*
 
 # make the sample config easier to munge (and "correct by default")

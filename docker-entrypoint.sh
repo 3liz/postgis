@@ -1,6 +1,35 @@
 #!/usr/bin/env bash
 set -e
 
+#
+# Check for correct uid/gid
+#
+# If the postgres uid/gid does not match the the mounted volumes
+# then we must change the uid/gid of the postgres user
+#
+# 
+docker_check_postgres_uid() {
+    if [ "$(id -u)" = '0' ]; then
+
+      local postgres_uid=$(id -u postgres)
+      local postgres_gid=$(id -g postgres)
+
+      local volume_uid=$(stat -c '%u' $PGDATA)
+      local volume_gid=$(stat -c '%g' $PGDATA)
+
+      if [[ "$postgres_gid" != $volume_gid ]]; then
+          echo "Changing postgres group id ($postgres_gid) to $volume_gid"
+          groupmod -g $volumes_gid postgres
+      fi
+
+      if [[ "$postgres_uid" != $volume_uid ]]; then
+          echo "Changing postgres user id ($postgres_uid) to $volume_uid"
+          usermod -u $volumes_uid postgres
+      fi
+   fi
+}
+
+
 # usage: file_env VAR [DEFAULT]
 #    ie: file_env 'XYZ_DB_PASSWORD' 'example'
 # (will allow for "$XYZ_DB_PASSWORD_FILE" to fill in the value of
@@ -32,6 +61,9 @@ docker_create_db_directories() {
 
     mkdir -p /var/run/postgresql || :
     chmod 775 /var/run/postgresql || :
+
+    # Check uid/gid accordingly to $PGDATA ownership
+    docker_check_postgres_uid
 
     # Create the transaction log directory before initdb is run so the directory is owned by the correct user
     if [ "$POSTGRES_INITDB_WALDIR" ]; then

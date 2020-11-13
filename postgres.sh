@@ -44,9 +44,7 @@ PG_PORT=${PG_PORT:-"127.0.0.1:5432"}
 PG_RUN=$HOME/.local/run/postgresql
 
 # Create posgresql data dir
-mkdir -p $PG_HOME
-mkdir -p $PG_RUN
-mkdir -p $PG_PREFIX/lib/postgres
+mkdir -p $PG_DATA $PG_RUN
 
 running=$(docker ps -a --filter "name=$PG_CONTAINER" --format "{{.Status}}")
 
@@ -63,7 +61,7 @@ function start_pg() {
       echo "Starting $PG_CONTAINER ..."
       echo "Unix socket: $PG_RUN"
       docker run --name=$PG_CONTAINER --hostname=postgres \
-        -e POSTGRES_PASSWORD=md535a77c9e70b9c91faada88d4f6b1cf97 \
+        -e POSTGRES_PASSWORD=$POSTGRES_PASSWORD_MD5 \
         -p $PG_PORT:5432 \
         -v $PG_DATA:/var/lib/postgresql/data \
         -v $PG_RUN:/var/run/postgresql \
