@@ -28,3 +28,8 @@ manifest:
     echo buildid=$(BUILDID)   >> $(MANIFEST) && \
     echo commitid=$(COMMITID) >> $(MANIFEST)
 
+
+push:
+	docker tag $(NAME):$(VERSION_TAG)  3liz/$(NAME):$(VERSION_TAG)
+	docker push 3liz/$(NAME):$(VERSION_TAG)
+

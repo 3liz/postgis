@@ -7,8 +7,8 @@ variables:
 .build:
   stage: build
   script: 
-    - make build POSTGIS_VER=$POSTGIS_VER POSTGRES_VER=$POSTGRES_VER POSTGRES_UID=$POSTGRES_UID
-    - $FACTORY_SCRIPTS/push-to-docker-hub.sh
+    - cat $DOCKERPASS | docker login -u 3liz --password-stdin
+    - make build push POSTGIS_VER=$POSTGIS_VER POSTGRES_VER=$POSTGRES_VER POSTGRES_UID=$POSTGRES_UID
   tags:
     - factory-dind
   only:
