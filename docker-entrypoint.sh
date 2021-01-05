@@ -157,13 +157,16 @@ docker_process_sql() {
     "${query_runner[@]}" "$@"
 }
 
-# create initial database
+# create initial database with postgis extension
 # uses environment variables for input: POSTGRES_DB
 docker_setup_db() {
     if [ "$POSTGRES_DB" != 'postgres' ]; then
+        echo "Creating initial database $POSTGRES_DB"
         POSTGRES_DB= docker_process_sql --dbname postgres --set db="$POSTGRES_DB" <<-'EOSQL'
 			CREATE DATABASE :"db" ;
 		EOSQL
+        echo "Creating postgis extension for $POSTGRES_DB"
+        docker_process_sql -c "CREATE EXTENSION postgis;"
         echo
     fi
 }
