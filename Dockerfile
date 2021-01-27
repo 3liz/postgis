@@ -13,7 +13,7 @@ ENV POSTGIS_MAJOR ${POSTGIS_VER}
 ENV LANGUAGE ${LANGUAGE}
 
 RUN  set -eux; export DEBIAN_FRONTEND=noninteractive; \
-     apt-get -y update && apt-get install -y --no-install-recommends wget ca-certificates gnupg2 dirmngr gosu locales; \
+     apt-get -y update && apt-get upgrade -y && apt-get install -y --no-install-recommends wget ca-certificates gnupg2 dirmngr gosu locales; \
      rm -rf /var/lib/apt/lists/*; \
      localedef -i $LANGUAGE -c -f UTF-8 -A /usr/share/locale/locale.alias $LANGUAGE.UTF-8; \
      wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -; \
