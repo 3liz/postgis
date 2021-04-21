@@ -19,12 +19,12 @@ docker_check_postgres_uid() {
 
       if [[ "$postgres_gid" != $volume_gid ]]; then
           echo "Changing postgres group id ($postgres_gid) to $volume_gid"
-          groupmod -g $volumes_gid postgres
+          groupmod -g $volume_gid postgres
       fi
 
       if [[ "$postgres_uid" != $volume_uid ]]; then
           echo "Changing postgres user id ($postgres_uid) to $volume_uid"
-          usermod -u $volumes_uid postgres
+          usermod -u $volume_uid postgres
       fi
    fi
 }
