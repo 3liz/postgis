@@ -39,6 +39,7 @@ RUN set -eux; export DEBIAN_FRONTEND=noninteractive;  \
     apt-get install -y postgresql-$PG_MAJOR-postgis-$POSTGIS_MAJOR \
                        postgresql-$PG_MAJOR-postgis-$POSTGIS_MAJOR-scripts \
                        postgresql-contrib-$PG_MAJOR \
+                       postgresql-$PG_MAJOR-ogr-fdw \
                        postgresql-$PG_MAJOR-cron \
                        --no-install-recommends; \
     apt-get autoremove -y; rm -rf /var/lib/apt/lists/*
