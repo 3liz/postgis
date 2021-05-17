@@ -1,5 +1,7 @@
-FROM debian:buster-slim
-MAINTAINER David Marteau
+ARG REGISTRY_PREFIX=''
+
+FROM ${REGISTRY_PREFIX}debian:buster-slim
+Label Maintainer="David Marteau" Vendor="3liz.com" Version="21.05.0"
 
 # Build argument: docker build --build-arg
 ARG POSTGRES_VER=12
