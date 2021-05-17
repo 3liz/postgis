@@ -41,6 +41,8 @@ RUN set -eux; export DEBIAN_FRONTEND=noninteractive;  \
                        postgresql-contrib-$PG_MAJOR \
                        postgresql-$PG_MAJOR-ogr-fdw \
                        postgresql-$PG_MAJOR-cron \
+                       postgresql-$PG_MAJOR-pgrouting \
+                       postgresql-$PG_MAJOR-pgrouting-scripts \
                        --no-install-recommends; \
     apt-get autoremove -y; rm -rf /var/lib/apt/lists/*
 
