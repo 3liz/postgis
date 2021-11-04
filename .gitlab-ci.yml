@@ -15,11 +15,23 @@ variables:
     refs:
       - schedules
 
+build:12-2.5:
+  extends: .build
+  variables:
+    POSTGIS_VER: "3"
+    POSTGRES_VER: "12"
+
 build:12-3:
   extends: .build
   variables:
     POSTGIS_VER: "3"
     POSTGRES_VER: "12"
+
+build:13-2.5:
+  extends: .build
+  variables:
+    POSTGIS_VER: "2.5"
+    POSTGRES_VER: "13"
 
 build:13-3:
   extends: .build
