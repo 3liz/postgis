@@ -1,0 +1,34 @@
+#!/bin/bash
+
+
+# start socket-only postgresql server for setting up or running scripts
+# all arguments will be passed along as arguments to `postgres` (via pg_ctl)
+docker_temp_server_start() {
+    # internal start of server in order to allow setup using psql client
+    # does not listen on external TCP/IP and waits until start finishes
+    set -- "$@" -c listen_addresses='' -p "${PGPORT:-5432}"
+
+    PGUSER="${PGUSER:-postgres}" \
+    pg_ctl -D "$PGDATANEW" \
+        -o "$(printf '%q ' "$@")" \
+        -w start
+}
+
+
+# stop postgresql server after done setting up user and running scripts
+docker_temp_server_stop() {
+    PGUSER="${PGUSER:-postgres}" \
+    pg_ctl -D "$PGDATANEW" -m fast -w stop
+}
+
+
+if [[ -e update_extensions.sql ]]; then
+    
+    echo "Updating extensions..."
+    docker_temp_server_start
+    
+    PGUSER=postgres \
+    psql -f update_extensions.sql
+
+    docker_temp_server_stop
+fi

@@ -1,7 +1,7 @@
 ARG REGISTRY_PREFIX=''
 
-FROM ${REGISTRY_PREFIX}debian:buster-slim
-Label Maintainer="David Marteau" Vendor="3liz.com" Version="21.05.0"
+FROM ${REGISTRY_PREFIX}ubuntu:20.04
+Label Maintainer="David Marteau" Vendor="3liz.com" Version="21.11.0"
 
 # Build argument: docker build --build-arg
 ARG POSTGRES_VER=12
@@ -34,7 +34,7 @@ RUN set -eux; export DEBIAN_FRONTEND=noninteractive; \
 COPY postgis.preference /etc/apt/preferences.d/pgdg
 
 RUN set -eux; export DEBIAN_FRONTEND=noninteractive;  \
-    echo "deb http://apt.postgresql.org/pub/repos/apt/ buster-pgdg main" $PG_MAJOR > /etc/apt/sources.list.d/pgdg.list; \
+    echo "deb http://apt.postgresql.org/pub/repos/apt/ focal-pgdg main"  > /etc/apt/sources.list.d/pgdg.list; \
     apt-get -y update; \
     apt-get install -y postgresql-common  --no-install-recommends; \
     sed -ri 's/#(create_main_cluster) .*$/\1 = false/' /etc/postgresql-common/createcluster.conf; \
@@ -64,11 +64,11 @@ RUN set -eux; export DEBIAN_FRONTEND=noninteractive; \
     mkdir -p /var/run/postgresql && chown -R postgres:postgres /var/run/postgresql && chmod 2777 /var/run/postgresql; \
     mkdir /docker-entrypoint-initdb.d
 
-VOLUME /var/lib/postgresql/data
-
 # We will run any commands in this when the container starts
 COPY docker-entrypoint.sh /usr/local/bin/
 ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
+
+VOLUME /var/lib/postgresql/data
 
 # Open port 5432 so linked containers can see them
 EXPOSE 5432

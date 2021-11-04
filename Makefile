@@ -6,11 +6,14 @@ SHELL:=bash
 
 NAME=postgis
 
-POSTGIS_VER:=2.5
-POSTGRES_VER:=12
+POSTGIS_VER:=3
+POSTGRES_VER:=13
 POSTGRES_UID:=$(shell id -u)
 
 VERSION_TAG:=$(POSTGRES_VER)-$(POSTGIS_VER)
+
+BUILDID=$(shell date +"%Y%m%d%H%M")
+COMMITID=$(shell git rev-parse --short HEAD)
 
 ifdef REGISTRY_URL
 REGISTRY_PREFIX=$(REGISTRY_URL)/
@@ -33,8 +36,10 @@ manifest:
     echo buildid=$(BUILDID)   >> $(MANIFEST) && \
     echo commitid=$(COMMITID) >> $(MANIFEST)
 
-push:
+tag:
 	docker tag $(NAME):$(VERSION_TAG)  3liz/$(NAME):$(VERSION_TAG)
+
+push: tag
 	docker push 3liz/$(NAME):$(VERSION_TAG)
 ifdef REGISTRY_URL
 	docker tag $(NAME):$(VERSION_TAG) $(REGISTRY_URL)/$(NAME):$(VERSION_TAG)
