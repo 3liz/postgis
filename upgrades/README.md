@@ -22,6 +22,13 @@ docker run --rm -v PGDATAOLD:/var/lib/postgresql/OLD/data \
                 postgis-upgrade:OLD-to-NEW [--link]
 ```
 
+By default the container run `pg_upgrade`. 
+
+If extensions must be upgraded, the script `update-extensions` will execute an `update_extensions.sql` file found 
+in the path. 
+
+See below for an example of `update_extensions.sql` file.
+
 ## Postgis version 
 
 Given the postgres major version Postgis version may come to version 2.5 or version 3.
@@ -46,6 +53,8 @@ SELECT PostGIS_Extensions_Upgrade();
 -- after the upgrade step
 DROP EXTENSION postgis_raster;
 ```
+
+
  
 ## References:
 

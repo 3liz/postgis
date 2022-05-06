@@ -273,7 +273,7 @@ _main() {
             docker_temp_server_start "$@"
 
             docker_setup_db
-            docker_process_init_files /docker-entrypoint-initdb.d/*
+            docker_process_init_files `ls -d -1 /docker-entrypoint-initdb.d/*`
 
             docker_temp_server_stop
             unset PGPASSWORD
