@@ -1,6 +1,6 @@
 ARG REGISTRY_PREFIX=''
 
-FROM ${REGISTRY_PREFIX}ubuntu:20.04
+FROM ${REGISTRY_PREFIX}ubuntu:21.04
 Label Maintainer="David Marteau" Vendor="3liz.com" Version="21.11.0"
 
 # Build argument: docker build --build-arg
@@ -34,7 +34,7 @@ RUN set -eux; export DEBIAN_FRONTEND=noninteractive; \
 COPY postgis.preference /etc/apt/preferences.d/pgdg
 
 RUN set -eux; export DEBIAN_FRONTEND=noninteractive;  \
-    echo "deb http://apt.postgresql.org/pub/repos/apt/ focal-pgdg main"  > /etc/apt/sources.list.d/pgdg.list; \
+    echo "deb http://apt.postgresql.org/pub/repos/apt/ hirsute-pgdg main"  > /etc/apt/sources.list.d/pgdg.list; \
     apt-get -y update; \
     apt-get install -y postgresql-common  --no-install-recommends; \
     sed -ri 's/#(create_main_cluster) .*$/\1 = false/' /etc/postgresql-common/createcluster.conf; \

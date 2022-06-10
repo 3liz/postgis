@@ -26,7 +26,7 @@ build: manifest
 		--build-arg POSTGRES_UID=$(POSTGRES_UID) \
 		--build-arg POSTGRES_VER=$(POSTGRES_VER) \
 		--build-arg POSTGIS_VER=$(POSTGIS_VER) \
-		-t $(NAME):$(VERSION_TAG) --cache-from=$(NAME):$(VERSION_TAG) $(DOCKERFILE) .
+		-t $(NAME):$(VERSION_TAG) $(DOCKERFILE) .
 
 MANIFEST=factory.manifest
 
