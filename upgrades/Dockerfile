@@ -18,7 +18,7 @@ ARG POSTGISVERSIONOLD
 
 USER root
 RUN set -eux; export DEBIAN_FRONTEND=noninteractive;  \
-    echo "deb http://apt.postgresql.org/pub/repos/apt/ focal-pgdg main" > /etc/apt/sources.list.d/pgdg.list; \
+    echo "deb http://apt.postgresql.org/pub/repos/apt/ bullseye-pgdg main" > /etc/apt/sources.list.d/pgdg.list; \
     apt-get -y update; \
     apt-get install -y postgresql-common  --no-install-recommends; \
     apt-get install -y postgresql-$PGVERSIONOLD-postgis-$POSTGISVERSIONOLD \
