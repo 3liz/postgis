@@ -38,7 +38,7 @@ We assume that:
 * For Postgresql 13+ then postgis is version 3
 * For Postgresql 12 or lower then postgis is version 2.5
 
-If your version scheme is différent, ensure tag the upgrade image accordingly
+If your version scheme is different, ensure tag the upgrade image accordingly
 to reflect the postgis  version used.
 
 For upgrading Postgis after running `pg_upgrade`:
