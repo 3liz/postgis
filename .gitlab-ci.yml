@@ -39,4 +39,10 @@ build:15-3:
     POSTGIS_VER: "3"
     POSTGRES_VER: "15"
 
+build:16-3:
+  extends: .build
+  variables:
+    POSTGIS_VER: "3"
+    POSTGRES_VER: "16"
+
 

@@ -1,10 +1,10 @@
 ARG REGISTRY_PREFIX=''
 
 FROM ${REGISTRY_PREFIX}debian:bullseye-slim
-Label Maintainer="David Marteau" Vendor="3liz.com" Version="22.07.0"
+Label Maintainer="David Marteau" Vendor="3liz.com" Version="23.06.0"
 
 # Build argument: docker build --build-arg
-ARG POSTGRES_VER=13
+ARG POSTGRES_VER=16
 ARG POSTGIS_VER=3
 ARG POSTGRES_UID=999
 ARG POSTGRES_GID=999

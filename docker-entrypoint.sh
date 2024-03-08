@@ -65,7 +65,8 @@ docker_create_db_directories() {
     # Check uid/gid accordingly to $PGDATA ownership
     docker_check_postgres_uid
 
-    # Create the transaction log directory before initdb is run so the directory is owned by the correct user
+    # Create the transaction log directory before initdb 
+    # is run so the directory is owned by the correct user
     if [ "$POSTGRES_INITDB_WALDIR" ]; then
         mkdir -p "$POSTGRES_INITDB_WALDIR"
         if [ "$user" = '0' ]; then
@@ -81,11 +82,12 @@ docker_create_db_directories() {
     fi
 }
 
-
-# initialize empty PGDATA directory with new database via 'initdb'
-# arguments to `initdb` can be passed via POSTGRES_INITDB_ARGS or as arguments to this function
-# `initdb` automatically creates the "postgres", "template0", and "template1" dbnames
-# this is also where the database user is created, specified by `POSTGRES_USER` env
+# Initialize empty PGDATA directory with new database via 'initdb'.
+# Arguments to `initdb` can be passed via POSTGRES_INITDB_ARGS or 
+# as arguments to this function.
+# `initdb` automatically creates the "postgres", "template0", 
+# and "template1" dbnames this is also where the database user 
+# is created, specified by `POSTGRES_USER` env
 docker_init_database_dir() {
 
     if [ "$POSTGRES_INITDB_WALDIR" ]; then
